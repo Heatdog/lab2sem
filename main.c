@@ -7,7 +7,7 @@
  пассажира (натуральное число), ts – время обслуживания пассажира (натуральное число).*/
 
 
-
+//Если хотите использовать вектор - введит -USE_VECTOR, список -USE_LIST (в CMake)
 
 #ifdef USE_VECTOR
 #include "vector.h"
@@ -35,8 +35,11 @@ int main() {
     mass.number = number;
     for (int i = 0; i < number; i++){
     #ifdef USE_VECTOR
-        mass.vect[i] = {0, 0, NULL, 0};
-        mass.vect[i].value = calloc(4, sizeof(queue))
+        mass.vect[i].tail = 0;
+        mass.vect[i].head = 0;
+        mass.vect[i].value = NULL;
+        mass.vect[i].time_process = 0;
+        mass.vect[i].value = calloc(4, sizeof(queue));
     #else
         mass.list[i] = (List*) malloc(sizeof(Item));
         mass.list[i]->time_process = 0;
@@ -49,7 +52,7 @@ int main() {
         #ifdef USE_VECTOR
         Vector vect = mass.vect[k];
         vect = queue_vector_input_p(vect, time);
-        if (strcmp(vect.value[vect.tail-1].id, "stop") || strcmp(vect.value[4].id, "stop")){
+        if ((strcmp(vect.value[0].id, "stop")) && (strcmp(vect.value[vect.tail-1].id, "stop")) == 0){
             break;
         }
         mass.vect[k] = vect;
