@@ -1,19 +1,12 @@
 //
 // Created by yura on 08.03.2021.
 //
-
+#ifdef USE_VECTOR
 #include "vector.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "input.h"
 #include <string.h>
 
-
-Vector queue_vector(){
-    Vector vect = {0, 0, NULL, 0};
-    vect.value = calloc(VECT_SIZE, sizeof (queue));
-    return vect;
-}
 
 Vector queue_vector_input_p(Vector vect, int time){
     printf("\nPlease, enter information about passengers in form:\nid/ta/ts\nwhere id- id of passenger; ta- arrival"
@@ -27,25 +20,13 @@ Vector queue_vector_input(Vector vect, int time){
     char id[10];
     queue value;
     if ((vect.tail <= VECT_SIZE && vect.tail != vect.head) || (vect.tail <= VECT_SIZE && vect.tail == vect.head && vect.time_process-1 == vect.value[vect.head].ts) || (vect.tail <= VECT_SIZE && vect.tail == vect.head && vect.value[vect.tail].ts == 0)) {
-        do {
-            input_three(id, &ta, &ts);
-            value.ta = ta;
-            if (ta > time){
-                printf("Please, repeat again! Your flight hasn't arrived yet!\n");
-            }
-        } while (ta > time);
+        input_three(id, &ta, &ts, time);
         strcpy(value.id, id);
         value.ts = ts;
         vect.value[vect.tail] = value;
         vect.tail++;
     } else if (vect.tail > VECT_SIZE && vect.head != 0){
-        do {
-            input_three(id, &ta, &ts);
-            value.ta = ta;
-            if (ta > time){
-                printf("Please, repeat again! Your flight hasn't arrived yet!\n");
-            }
-        } while (ta > time);
+        input_three(id, &ta, &ts, time);
         strcpy(value.id, id);
         value.ts = ts;
         vect.tail = 0;
@@ -126,10 +107,11 @@ Vector queue_vector_output(Vector vect, int time){
     return vect;
 }
 
-void del(Massive mass){
+void del_vect(Massive mass){
     for (int i = 0; i < mass.number; i++){
         free(mass.vect[i].value);
     }
     free(mass.vect);
     mass.number = 0;
 }
+#endif
