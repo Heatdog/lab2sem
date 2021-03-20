@@ -18,20 +18,21 @@ typedef struct Item{
     struct Item *next;
 } Item;
 
-typedef struct {
-    Item *head;
-    Item *tail;
-    int time_process;
-} List;
 
-
+#ifdef USE_VECTOR
 typedef struct {
     int head;
     int tail;
     queue *value;
     int time_process;
 }Vector;
-
+#else
+typedef struct {
+    Item *head;
+    Item *tail;
+    int time_process;
+} List;
+#endif
 
 typedef struct{
     int number;
