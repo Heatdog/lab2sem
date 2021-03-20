@@ -23,12 +23,14 @@ Vector queue_vector_input(Vector vect, int time){
         input_three(id, &ta, &ts, time);
         strcpy(value.id, id);
         value.ts = ts;
+        value.ta = ta;
         vect.value[vect.tail] = value;
         vect.tail++;
     } else if (vect.tail > VECT_SIZE && vect.head != 0){
         input_three(id, &ta, &ts, time);
         strcpy(value.id, id);
         value.ts = ts;
+        value.ta = ta;
         vect.tail = 0;
         vect.value[vect.tail] = value;
         vect.tail++;
