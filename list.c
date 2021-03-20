@@ -1,7 +1,7 @@
 //
 // Created by yura on 14.03.2021.
 //
-
+#ifdef USE_LIST
 #include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +16,7 @@ List *queue_list_input_p(List* list, int time){
 }
 
 List *queue_list_input(List* list, int time){
-    Item *value;
+    Item *value = NULL;
     if (list->head == NULL && list->tail == NULL){
         value = item_input(time);
         list->head = value;
@@ -98,3 +98,4 @@ void del_list(Massive mass){
     free(mass.list);
     mass.number = 0;
 }
+#endif
