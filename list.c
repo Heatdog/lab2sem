@@ -26,6 +26,7 @@ List *queue_list_input(List* list, int time){
         list->tail->next = value;
         list->tail = value;
     }
+    value = NULL;
     return list;
 }
 
@@ -49,6 +50,7 @@ Massive queue_list_output_p(Massive mass, int time){
         List *list = mass.list[i];
         list = queue_list_output(list);
         mass.list[i] = list;
+        list = NULL;
     }
     return mass;
 }
@@ -65,8 +67,9 @@ List *queue_list_output(List* list){
         if (list->head == NULL && list->tail != NULL){
             list->head = list->tail;
         }
-        printf("%.3s/%d/%d\t", ptr->ptr.id, ptr->ptr.ta, ptr->ptr.ts);
+        printf("%s/%d/%d\t", ptr->ptr.id, ptr->ptr.ta, ptr->ptr.ts);
         ptr->next = NULL;
+        ptr = NULL;
         list = queue_list_print(list);
     }
     return list;
@@ -76,24 +79,27 @@ List *queue_list_print(List* list){
     Item *ptr = list->head;
     list->time_process++;
     while (1){
-        printf("%.3s/%d/%d\t", ptr->ptr.id, ptr->ptr.ta, ptr->ptr.ts);
+        printf("%s/%d/%d\t", ptr->ptr.id, ptr->ptr.ta, ptr->ptr.ts);
         ptr = ptr->next;
         if (ptr == NULL){
             break;
         }
     }
+    ptr = NULL;
     return list;
 }
 
 void del_list(Massive mass){
     for (int i = 0; i < mass.number; i++){
-        Item *ptr = mass.list[i]->head, *ptr_prev;
+        Item *ptr = mass.list[i]->head, *ptr_prev = NULL;
         while (ptr != NULL){
             ptr_prev = ptr;
             ptr = ptr->next;
             free(ptr_prev);
         }
         free(mass.list[i]);
+        ptr = NULL;
+        ptr_prev = NULL;
     }
     free(mass.list);
     mass.number = 0;
